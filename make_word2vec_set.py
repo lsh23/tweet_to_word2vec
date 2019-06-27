@@ -12,7 +12,8 @@ import pickle
 #     print(tweet)
 
 float_size = 4
-pretrained_set_dict = dict()
+pretrained_set_dict_word_vector = dict()
+pretrained_set_dict_vector_word = dict()
 count = 0;
 with open("GoogleNews-vectors-negative300.bin\\GoogleNews-vectors-negative300.bin",'rb') as file:
     first_line = file.readline().decode('utf-8').strip('\n').split(' ')
@@ -40,9 +41,10 @@ with open("GoogleNews-vectors-negative300.bin\\GoogleNews-vectors-negative300.bi
         word = word.lower()
         # words.append(word)
 
-        vector = list(struct.unpack('300f', file.read(float_size * vector_size)))
+        vector = tuple(struct.unpack('300f', file.read(float_size * vector_size)))
         # vectors.append(vector)
-        pretrained_set_dict[word]=vector
+        pretrained_set_dict_word_vector[word]=vector
+        pretrained_set_dict_vector_word[vector]=word
 
         count = count + 1
         # dummy = file.read(1)
@@ -50,9 +52,10 @@ with open("GoogleNews-vectors-negative300.bin\\GoogleNews-vectors-negative300.bi
 
 # with open('./word2vec/word2vec_vectors.pkl', 'wb') as f:
 #     pickle.dump(vectors, f)
-with open('./word2vec/pretrained_set_dict.pkl', 'wb') as f:
-    pickle.dump(pretrained_set_dict, f)
-
+with open('./word2vec/pretrained_set_dict_word_vector.pkl', 'wb') as f:
+    pickle.dump(pretrained_set_dict_word_vector, f)
+with open('./word2vec/pretrained_set_dict_vector_word.pkl', 'wb') as f:
+    pickle.dump(pretrained_set_dict_vector_word, f)
 # print(pretrained_set_dict['small'])
 
 # with open('./word2vec/word_list.pkl', 'rb') as f:
